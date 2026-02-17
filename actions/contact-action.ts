@@ -4,11 +4,11 @@ import Airtable from 'airtable';
 import { revalidatePath } from 'next/cache';
 
 // Función auxiliar para Telegram (Más robusta que WhatsApp gratis)
-async function notifyAdminTelegram(nombre: string, email: string, mensaje: string) {
+async function notifyAdminTelegram(nombre: string, empresa: string, mensaje: string) {
     const token = process.env.TELEGRAM_BOT_TOKEN; // El que te dio BotFather
     const chatId = process.env.TELEGRAM_CHAT_ID;  // Tu ID numérico
 
-    const text = `🧉 *Nuevo Lead mateTech*\n\n👤 *Nombre:* ${nombre}\n📧 *Email:* ${email}\n💬 *Mensaje:* ${mensaje}`;
+    const text = `🧉 *Nuevo Lead mateTech*\n\n👤 *Nombre:* ${nombre}\n🏢 *Empresa:* ${empresa}\n💬 *Mensaje:* ${mensaje}`;
 
     try {
         await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -48,7 +48,7 @@ export async function submitContact(formData: FormData) {
                 },
             },
         ]);
-        void notifyAdminTelegram(nombre, email, mensaje);
+        await notifyAdminTelegram(nombre, empresa, mensaje);
         
         return { success: true, message: '¡Mensaje recibido! Te responderemos pronto.' };
     } catch (error) {
