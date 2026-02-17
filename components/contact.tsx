@@ -7,12 +7,24 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ScrollReveal } from "@/components/scroll-reveal"
+import { submitContact } from '@/actions/contact-action';
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [pending, setPending] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    setPending(true);
+    const result = await submitContact(new FormData(e.currentTarget));
+    setPending(false);
+
+    if (result.success) {
+      console.log(result.message);
+      // Opcional: resetear el form aquí
+    } else {
+      console.log(result.message);
+    }
     setSubmitted(true)
   }
 
@@ -75,10 +87,10 @@ export function Contact() {
                       <CheckCircle2 className="h-7 w-7 text-primary" />
                     </div>
                     <h3 className="font-display text-xl font-semibold text-foreground">
-                      Mensaje enviado, genio
+                      Mensaje enviado
                     </h3>
                     <p className="mt-2 text-muted-foreground">
-                      Te contactamos en menos de 24 horas. Quedate tranqui.
+                      Te contactamos en menos de 24 horas.
                     </p>
                   </div>
                 ) : (
