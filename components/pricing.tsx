@@ -6,15 +6,58 @@ import {
   Smartphone,
   HeartHandshake,
   Check,
+  Utensils,
+  Camera,
+  Heart,
 } from "lucide-react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
 const services = [
   {
+    icon: Heart,
+    title: "Invitaciones Digitales",
+    price: "Desde $ 85.000",
+    features: [
+      "Casamientos & 15 Años",
+      "Confirmación de Asistencia",
+      "Ubicación GPS y Cuenta Regresiva",
+      "Sección de Regalos (CBU/Alias)",
+    ],
+    highlighted: false,
+  },
+
+  // Opción 2: Portfolios (Ideal creativos)
+  {
+    icon: Camera,
+    title: "Portfolio para Fotógrafos",
+    price: "Desde $ 180.000",
+    features: [
+      "Galería de Alta Calidad",
+      "Carga ultra rápida (imágenes optimizadas)",
+      "Formulario de Booking/Reserva",
+      "Integración con Instagram",
+    ],
+    highlighted: false,
+  },
+
+  // Opción 3: Gastronomía (Ideal locales de barrio)
+  {
+    icon: Utensils,
+    title: "Menú Digital & QR",
+    price: "Desde $ 150.000",
+    features: [
+      "Carta actualizable al instante",
+      "Sin comisiones por venta",
+      "Pedidos directo a WhatsApp",
+      "Generación de código QR",
+    ],
+    highlighted: false,
+  },
+  {
     icon: LayoutTemplate,
     title: "Landing Page Express",
-    price: "Desde $ 220.000",
+    price: "Desde $ 120.000",
     features: [
       "One Page",
       "Diseno de Alta Conversion",
@@ -40,7 +83,7 @@ const services = [
     price: "Desde $ 120.000",
     features: [
       "Chatbots que laburan solos",
-      "Conexion entre Apps (Zapier/Make)",
+      "Conexion entre Apps (N8N/Make)",
       "Emails automaticos",
       "Ahorro de tiempo administrativo",
     ],
