@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { Instagram } from "lucide-react"
 
 export function Footer() {
   return (
@@ -21,6 +22,17 @@ export function Footer() {
           </span>
           {" y código"}
         </p>
+        <div className="flex items-center gap-4">
+          <a
+            href="https://www.instagram.com/matetechok/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-primary"
+            aria-label="Instagram"
+          >
+            <Instagram className="h-5 w-5" />
+          </a>
+        </div>
       </div>
     </footer>
   )
