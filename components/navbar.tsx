@@ -9,6 +9,7 @@ import logo from "../public/images/logo.png"
 const navLinks = [
   { label: "Nosotros", href: "#nosotros" },
   { label: "Proceso", href: "#proceso" },
+  { label: "Demos", href: "#demos" },
   { label: "Servicios", href: "#servicios" },
   { label: "FAQ", href: "#faq" },
   { label: "Contacto", href: "#contacto" },
