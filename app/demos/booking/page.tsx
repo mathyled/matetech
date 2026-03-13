@@ -16,7 +16,11 @@ import {
   CalendarCheck2,
   Phone,
   Mail,
-  Search
+  Search,
+  Stethoscope,
+  Scissors,
+  Dumbbell,
+  Brain
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -25,9 +29,10 @@ import { es } from "date-fns/locale"
 
 // --- Mock Data ---
 const services = [
-  { id: 1, name: "Consultoría IT", duration: "60 min", price: "$15.000", color: "bg-blue-500" },
-  { id: 2, name: "Diseño UX/UI", duration: "45 min", price: "$12.000", color: "bg-purple-500" },
-  { id: 3, name: "Asesoramiento Legal", duration: "30 min", price: "$10.000", color: "bg-emerald-500" },
+  { id: 1, name: "Psicología", description: "Sesión individual de terapia online o presencial.", duration: "50 min", price: "$12.000", color: "bg-indigo-500", icon: Brain },
+  { id: 2, name: "Nutrición", description: "Plan alimentación personalizado y seguimiento.", duration: "40 min", price: "$8.500", color: "bg-emerald-500", icon: Stethoscope },
+  { id: 3, name: "Barbería Pro", description: "Corte premium, lavado y perfilado de barba.", duration: "60 min", price: "$6.000", color: "bg-amber-600", icon: Scissors },
+  { id: 4, name: "Personal Trainer", description: "Entrenamiento funcional adaptado a tus objetivos.", duration: "60 min", price: "$7.500", color: "bg-rose-500", icon: Dumbbell },
 ]
 
 const availableTimes = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"]
@@ -44,8 +49,8 @@ export default function BookingDemo() {
 
   // Mock reservations for admin
   const [reservations, setReservations] = useState([
-    { id: 1, client: "Juan Perez", service: "Consultoría IT", date: new Date(), time: "10:00", status: "Confirmado", email: "juan@gmail.com" },
-    { id: 2, client: "Maria Garcia", service: "Diseño UX/UI", date: addDays(new Date(), 1), time: "15:00", status: "Pendiente", email: "m.garcia@outlook.com" },
+    { id: 1, client: "Julian Rossi", service: "Psicología", date: new Date(), time: "10:00", status: "Confirmado", email: "jrossi@gmail.com" },
+    { id: 2, client: "Lucía Fernández", service: "Barbería Pro", date: addDays(new Date(), 1), time: "15:00", status: "Pendiente", email: "lucia.f@outlook.com" },
   ])
 
   // Calendar logic
@@ -103,27 +108,38 @@ export default function BookingDemo() {
           <div className="mx-auto max-w-2xl">
             {step === "service" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="mb-10">
-                        <h1 className="text-3xl font-black mb-2 tracking-tight">Elegí el servicio</h1>
-                        <p className="text-slate-500 dark:text-slate-400">Seleccioná la opción que mejor se adapte a tus necesidades.</p>
+                    <div className="mb-10 text-center">
+                        <h1 className="text-4xl font-black mb-3 tracking-tight">Elegí el servicio</h1>
+                        <p className="text-slate-500 dark:text-slate-400 font-medium italic">¿Qué vamos a hacer hoy?</p>
                     </div>
-                    <div className="grid gap-4">
+                    <div className="grid gap-6">
                         {services.map(s => (
                             <button 
                                 key={s.id}
                                 onClick={() => { setSelectedService(s); setStep("datetime"); }}
-                                className="group flex items-center justify-between p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-primary transition-all hover:shadow-xl hover:shadow-primary/5 text-left"
+                                className="group relative flex items-center p-1 bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-slate-100 dark:border-slate-800 hover:border-primary transition-all hover:shadow-2xl hover:shadow-primary/10 text-left active:scale-[0.98]"
                             >
-                                <div className="flex items-center gap-4">
-                                    <div className={`h-12 w-12 rounded-2xl ${s.color} bg-opacity-10 dark:bg-opacity-20 flex items-center justify-center text-primary`}>
-                                        <Plus className="h-6 w-6" />
+                                <div className="flex w-full items-center gap-6 p-5">
+                                    <div className={`h-20 w-20 shrink-0 rounded-3xl ${s.color} bg-opacity-10 dark:bg-opacity-20 flex items-center justify-center text-primary transition-transform group-hover:scale-110`}>
+                                        <s.icon className="h-10 w-10 shrink-0" strokeWidth={1.5} />
                                     </div>
-                                    <div>
-                                        <h3 className="font-bold text-lg">{s.name}</h3>
-                                        <p className="text-sm text-slate-500">{s.duration} • {s.price}</p>
+                                    <div className="flex-1">
+                                        <div className="flex items-center justify-between mb-1">
+                                            <h3 className="font-black text-xl tracking-tight">{s.name}</h3>
+                                            <span className="text-lg font-black text-primary">{s.price}</span>
+                                        </div>
+                                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-2 font-medium line-clamp-1">{s.description}</p>
+                                        <div className="flex items-center gap-4">
+                                            <span className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                                                <Clock className="h-3 w-3" />
+                                                {s.duration}
+                                            </span>
+                                            <span className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary">
+                                                Disponible hoy
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                                <ChevronRight className="h-5 w-5 text-slate-300 group-hover:text-primary transition-colors" />
                             </button>
                         ))}
                     </div>
