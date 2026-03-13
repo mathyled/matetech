@@ -296,10 +296,51 @@ export default function BookingDemo() {
 
             {/* List */}
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm">
-                <div className="p-8 border-b border-slate-100 dark:border-slate-800">
-                    <h3 className="font-black text-xl">Próximas Reservas</h3>
+                <div className="p-8 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <h3 className="font-black text-xl tracking-tight">Próximas Reservas</h3>
+                    <span className="bg-primary/10 text-primary text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">{reservations.length} total</span>
                 </div>
-                <div className="overflow-x-auto">
+
+                {/* Mobile View: Cards */}
+                <div className="md:hidden divide-y divide-slate-100 dark:divide-slate-800">
+                    {reservations.map(res => (
+                        <div key={res.id} className="p-6 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
+                                        {res.client.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-sm tracking-tight">{res.client}</p>
+                                        <p className="text-[10px] text-slate-400 font-medium">{res.email}</p>
+                                    </div>
+                                </div>
+                                <div className={`px-3 py-1 rounded-full text-[10px] font-bold ${res.status === "Confirmado" ? "bg-emerald-100 text-emerald-700" : "bg-orange-100 text-orange-700"}`}>
+                                    {res.status}
+                                </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-950/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
+                                <div>
+                                    <p className="text-[8px] uppercase font-black text-slate-400 tracking-widest mb-1">Servicio</p>
+                                    <p className="text-xs font-bold">{res.service}</p>
+                                </div>
+                                <div>
+                                    <p className="text-[8px] uppercase font-black text-slate-400 tracking-widest mb-1">Fecha y Hora</p>
+                                    <p className="text-xs font-bold capitalize">{format(res.date, "eee d MMM", { locale: es })} • {res.time} hs</p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-2">
+                                <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold hover:bg-primary hover:text-white transition-all"><Phone className="h-3.5 w-3.5" /> Llamar</button>
+                                <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold hover:bg-primary hover:text-white transition-all"><Mail className="h-3.5 w-3.5" /> Email</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Desktop View: Table */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
                             <tr className="text-[10px] uppercase font-black text-slate-400 tracking-[0.2em] bg-slate-50 dark:bg-slate-950">
@@ -307,7 +348,7 @@ export default function BookingDemo() {
                                 <th className="px-8 py-4">Servicio</th>
                                 <th className="px-8 py-4">Fecha y Hora</th>
                                 <th className="px-8 py-4">Estado</th>
-                                <th className="px-8 py-4">Acciones</th>
+                                <th className="px-8 py-4 text-right">Acciones</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -342,10 +383,10 @@ export default function BookingDemo() {
                                         </div>
                                     </td>
                                     <td className="px-8 py-6">
-                                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white transition-all"><Phone className="h-4 w-4" /></button>
-                                            <button className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white transition-all"><Mail className="h-4 w-4" /></button>
-                                            <button className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white transition-all"><MoreVertical className="h-4 w-4" /></button>
+                                        <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button title="Llamar" className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white transition-all"><Phone className="h-4 w-4" /></button>
+                                            <button title="Enviar Email" className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white transition-all"><Mail className="h-4 w-4" /></button>
+                                            <button title="Más opciones" className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white transition-all"><MoreVertical className="h-4 w-4" /></button>
                                         </div>
                                     </td>
                                 </tr>
