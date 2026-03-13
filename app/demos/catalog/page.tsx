@@ -193,8 +193,15 @@ export default function CatalogDemo() {
               </div>
 
               <div className="border-t border-slate-100 pt-6">
+                <div className="mb-6 rounded-2xl bg-slate-50 border border-slate-100 p-4">
+                  <p className="text-[10px] uppercase font-bold text-slate-400 mb-2 tracking-widest">Vista previa del mensaje</p>
+                  <p className="text-xs text-slate-600 font-mono whitespace-pre-wrap leading-relaxed">
+                    {decodeURIComponent(whatsappMessage())}
+                  </p>
+                </div>
+                
                 <div className="flex justify-between items-center mb-6">
-                   <span className="text-slate-500 font-medium">Total Estimado</span>
+                   <span className="text-slate-500 font-medium text-sm">Total del pedido</span>
                    <span className="text-3xl font-black text-slate-900">${cartTotal}</span>
                 </div>
                 <a 
