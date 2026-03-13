@@ -89,6 +89,34 @@ export default function WeddingDemo() {
            <button className="bg-slate-900 text-white px-8 py-3 rounded-full font-sans text-sm hover:bg-slate-800 transition-all font-bold tracking-widest">VER DATOS BANCARIOS</button>
         </div>
 
+        {/* TRIVIA QUIZ */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-10 mb-16 shadow-sm">
+           <Music className="h-8 w-8 mx-auto mb-4 text-[#d4af37]" />
+           <h3 className="text-xl mb-6">¿Cuánto conocés a los novios?</h3>
+           <div className="space-y-6 text-left font-sans">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                <p className="text-sm font-bold mb-3">1. ¿Dónde se conocieron?</p>
+                <div className="grid gap-2">
+                   {["En la facultad", "En un viaje", "En un café"].map((opt) => (
+                     <button key={opt} className="w-full text-left px-4 py-2 rounded-xl border border-slate-200 text-sm hover:border-[#d4af37] transition-colors bg-white">
+                        {opt}
+                     </button>
+                   ))}
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                <p className="text-sm font-bold mb-3">2. ¿Quién dio el primer paso?</p>
+                <div className="grid gap-2">
+                   {["Sofia", "Mateo", "Fue mutuo"].map((opt) => (
+                     <button key={opt} className="w-full text-left px-4 py-2 rounded-xl border border-slate-200 text-sm hover:border-[#d4af37] transition-colors bg-white">
+                        {opt}
+                     </button>
+                   ))}
+                </div>
+              </div>
+           </div>
+        </div>
+
         {/* RSVP FORM */}
         <div className="mb-20">
             <h2 className="text-3xl mb-8">Confirmar Asistencia</h2>
