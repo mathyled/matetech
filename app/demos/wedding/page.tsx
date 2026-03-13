@@ -1,12 +1,33 @@
 "use client"
 
 import { useState } from "react"
-import { Heart, MapPin, Calendar, Clock, Music, Gift, ArrowLeft } from "lucide-react"
+import { Heart, MapPin, Calendar, Clock, Music, Gift, ArrowLeft, CheckCircle2, XCircle } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
+const triviaQuestions = [
+  {
+    id: 1,
+    question: "¿Dónde se conocieron?",
+    options: ["En la facultad", "En un viaje", "En un café"],
+    correct: "En la facultad"
+  },
+  {
+    id: 2,
+    question: "¿Quién dio el primer paso?",
+    options: ["Sofia", "Mateo", "Fue mutuo"],
+    correct: "Sofia"
+  }
+]
+
 export default function WeddingDemo() {
   const [rsvp, setRsvp] = useState(false)
+  const [triviaAnswers, setTriviaAnswers] = useState<{ [key: number]: string }>({})
+
+  const handleTriviaSelect = (questionId: number, option: string) => {
+    if (triviaAnswers[questionId]) return // Ya respondió
+    setTriviaAnswers(prev => ({ ...prev, [questionId]: option }))
+  }
 
   if (rsvp) {
     return (
@@ -42,7 +63,7 @@ export default function WeddingDemo() {
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
-          <span className="text-lg tracking-[0.3em] uppercase mb-4 drop-shadow-md">Nuestra Boda</span>
+          <span className="text-lg tracking-[0.3em] uppercase mb-4 drop-shadow-md tracking-widest font-sans">Nuestra Boda</span>
           <h1 className="text-5xl md:text-7xl mb-4 drop-shadow-xl font-serif">Sofia & Mateo</h1>
           <div className="h-px w-24 bg-white/60 mb-6" />
           <p className="text-xl italic drop-shadow-md">24 de Octubre, 2026</p>
@@ -75,7 +96,7 @@ export default function WeddingDemo() {
           </div>
 
           <div className="flex flex-col items-center">
-            <Music className="h-6 w-6 mb-4 text-[#d4af37]" />
+            <Clock className="h-6 w-6 mb-4 text-[#d4af37]" />
             <h3 className="font-sans font-bold uppercase tracking-widest text-xs mb-2">Dress Code</h3>
             <p>Elegante Sport</p>
           </div>
@@ -90,44 +111,64 @@ export default function WeddingDemo() {
         </div>
 
         {/* TRIVIA QUIZ */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-10 mb-16 shadow-sm">
+        <div className="bg-white border border-slate-200 rounded-3xl p-10 mb-16 shadow-sm overflow-hidden relative">
+           <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37]/5 rounded-full -mr-16 -mt-16" />
            <Music className="h-8 w-8 mx-auto mb-4 text-[#d4af37]" />
-           <h3 className="text-xl mb-6">¿Cuánto conocés a los novios?</h3>
-           <div className="space-y-6 text-left font-sans">
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                <p className="text-sm font-bold mb-3">1. ¿Dónde se conocieron?</p>
-                <div className="grid gap-2">
-                   {["En la facultad", "En un viaje", "En un café"].map((opt) => (
-                     <button key={opt} className="w-full text-left px-4 py-2 rounded-xl border border-slate-200 text-sm hover:border-[#d4af37] transition-colors bg-white">
-                        {opt}
-                     </button>
-                   ))}
+           <h3 className="text-xl mb-2">¿Cuánto conocés a los novios?</h3>
+           <p className="text-slate-400 text-xs font-sans mb-8">Poné a prueba tu conocimiento</p>
+           
+           <div className="space-y-8 text-left font-sans">
+              {triviaQuestions.map((q) => (
+                <div key={q.id} className="p-1">
+                  <p className="text-sm font-bold mb-4 flex items-center gap-2">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-[10px] text-slate-500">{q.id}</span>
+                    {q.question}
+                  </p>
+                  <div className="grid gap-3">
+                    {q.options.map((opt) => {
+                      const isSelected = triviaAnswers[q.id] === opt
+                      const isCorrect = opt === q.correct
+                      const showResult = !!triviaAnswers[q.id]
+                      
+                      let appearance = "border-slate-100 bg-white"
+                      if (showResult) {
+                        if (isCorrect) appearance = "border-emerald-200 bg-emerald-50 text-emerald-700 shadow-sm"
+                        else if (isSelected && !isCorrect) appearance = "border-rose-200 bg-rose-50 text-rose-700 opacity-80"
+                        else appearance = "border-slate-100 bg-white opacity-40"
+                      } else {
+                        appearance = "border-slate-200 bg-white hover:border-[#d4af37] hover:shadow-md cursor-pointer"
+                      }
+
+                      return (
+                        <button 
+                          key={opt} 
+                          disabled={showResult}
+                          onClick={() => handleTriviaSelect(q.id, opt)}
+                          className={`flex items-center justify-between w-full text-left px-5 py-3 rounded-2xl border transition-all duration-300 text-sm font-medium ${appearance}`}
+                        >
+                          {opt}
+                          {showResult && isCorrect && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
+                          {showResult && isSelected && !isCorrect && <XCircle className="h-4 w-4 text-rose-500" />}
+                        </button>
+                      )
+                    })}
+                  </div>
                 </div>
-              </div>
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                <p className="text-sm font-bold mb-3">2. ¿Quién dio el primer paso?</p>
-                <div className="grid gap-2">
-                   {["Sofia", "Mateo", "Fue mutuo"].map((opt) => (
-                     <button key={opt} className="w-full text-left px-4 py-2 rounded-xl border border-slate-200 text-sm hover:border-[#d4af37] transition-colors bg-white">
-                        {opt}
-                     </button>
-                   ))}
-                </div>
-              </div>
+              ))}
            </div>
         </div>
 
         {/* RSVP FORM */}
         <div className="mb-20">
             <h2 className="text-3xl mb-8">Confirmar Asistencia</h2>
-            <div className="space-y-4 max-w-xs mx-auto text-left font-sans">
-                <div>
-                   <label className="text-[10px] uppercase font-bold text-slate-400">Nombre y Apellido</label>
-                   <input type="text" className="w-full bg-white border-b border-slate-200 py-2 outline-none focus:border-[#d4af37] transition-colors" placeholder="Ej: Juan Perez" />
+            <div className="space-y-6 max-w-xs mx-auto text-left font-sans">
+                <div className="group">
+                   <label className="text-[10px] uppercase font-bold text-slate-400 group-focus-within:text-[#d4af37] transition-colors tracking-widest">Nombre y Apellido</label>
+                   <input type="text" className="w-full bg-transparent border-b border-slate-200 py-3 outline-none focus:border-[#d4af37] transition-all text-sm" placeholder="Ej: Juan Perez" />
                 </div>
-                <div>
-                   <label className="text-[10px] uppercase font-bold text-slate-400">Dieta Especial</label>
-                   <select className="w-full bg-white border-b border-slate-200 py-2 outline-none focus:border-[#d4af37] transition-colors">
+                <div className="group">
+                   <label className="text-[10px] uppercase font-bold text-slate-400 group-focus-within:text-[#d4af37] transition-colors tracking-widest">Dieta Especial</label>
+                   <select className="w-full bg-transparent border-b border-slate-200 py-3 outline-none focus:border-[#d4af37] transition-all text-sm appearance-none cursor-pointer">
                        <option>Ninguna</option>
                        <option>Vegetariano</option>
                        <option>Vegano</option>
@@ -136,16 +177,19 @@ export default function WeddingDemo() {
                 </div>
                 <button 
                   onClick={() => setRsvp(true)}
-                  className="w-full bg-[#d4af37] text-white py-4 rounded-full mt-8 font-bold tracking-widest shadow-xl shadow-[#d4af37]/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  className="w-full bg-[#d4af37] text-white py-5 rounded-full mt-10 font-bold tracking-widest shadow-2xl shadow-[#d4af37]/30 hover:scale-[1.02] active:scale-[0.98] transition-all text-xs"
                 >
-                  CONFIRMAR
+                  CONFIRMAR ASISTENCIA
                 </button>
             </div>
         </div>
 
-        <p className="mt-12 text-[10px] uppercase tracking-[0.3em] text-slate-400 font-sans">
-            Sofia & Mateo — 2026
-        </p>
+        <div className="mt-24 pt-12 border-t border-slate-100">
+          <Heart className="h-5 w-5 mx-auto mb-4 text-[#d4af37]/30" />
+          <p className="text-[10px] uppercase tracking-[0.4em] text-slate-400 font-sans font-medium">
+              Sofia & Mateo — 2026
+          </p>
+        </div>
       </div>
     </div>
   )
