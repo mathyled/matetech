@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Calendar, ShoppingBag, Contact2, ArrowRight } from "lucide-react"
+import { Calendar, ShoppingBag, Heart, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const demos = [
@@ -23,13 +23,13 @@ const demos = [
     href: "/demos/catalog"
   },
   {
-    title: "Bio Link Pro",
-    description: "Tu tarjeta de presentación digital. Agrupa todos tus links, servicios y contacto en un solo lugar premium.",
-    image: "/images/demos/bio.png",
-    icon: Contact2,
-    color: "from-emerald-500/20 to-teal-500/20",
-    tags: ["Networking", "Social", "Portfolio"],
-    href: "/demos/bio"
+    title: "Invitación de Boda",
+    description: "Invitaciones digitales elegantes y autogestionables. Confirmación de asistencia (RSVP) y lista de regalos.",
+    image: "/images/demos/wedding.png",
+    icon: Heart,
+    color: "from-rose-500/20 to-pink-500/20",
+    tags: ["Eventos", "Premium", "RSVP"],
+    href: "/demos/wedding"
   }
 ]
 

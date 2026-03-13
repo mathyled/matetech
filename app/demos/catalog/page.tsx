@@ -14,6 +14,11 @@ const products = [
 
 export default function CatalogDemo() {
   const [cartCount, setCartCount] = useState(0)
+  const [activeCategory, setActiveCategory] = useState("All")
+
+  const filteredProducts = activeCategory === "All" 
+    ? products 
+    : products.filter(p => p.category === activeCategory)
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-24">
@@ -46,8 +51,12 @@ export default function CatalogDemo() {
 
       {/* Categories */}
       <div className="flex gap-4 px-6 mb-8 overflow-x-auto no-scrollbar">
-          {["All", "Cafetería", "Pastelería", "Brunch"].map((cat, i) => (
-              <button key={cat} className={`px-5 py-2 rounded-full border text-sm font-medium whitespace-nowrap transition-colors ${i === 0 ? "bg-slate-900 text-white border-slate-900" : "bg-white border-slate-200"}`}>
+          {["All", "Cafetería", "Pastelería", "Brunch"].map((cat) => (
+              <button 
+                key={cat} 
+                onClick={() => setActiveCategory(cat)}
+                className={`px-5 py-2 rounded-full border text-sm font-medium whitespace-nowrap transition-colors ${activeCategory === cat ? "bg-slate-900 text-white border-slate-900" : "bg-white border-slate-200"}`}
+              >
                   {cat}
               </button>
           ))}
@@ -55,7 +64,7 @@ export default function CatalogDemo() {
 
       {/* Grid */}
       <div className="grid grid-cols-2 gap-4 px-6">
-          {products.map(product => (
+          {filteredProducts.map(product => (
               <div key={product.id} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
                   <div className="relative aspect-square">
                       <Image src={product.image} alt={product.name} fill className="object-cover" />
@@ -79,10 +88,14 @@ export default function CatalogDemo() {
 
       {/* Floating Call to Action */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-md">
-          <button className="w-full bg-[#25D366] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 shadow-xl shadow-green-500/20 active:scale-95 transition-transform">
+          <a 
+            href={`https://wa.me/5491100000000?text=Hola!%20Me%20interesa%20hacer%20un%20pedido%20de%20mi%20carrito%20(${cartCount}%20items)`}
+            target="_blank"
+            className="w-full bg-[#25D366] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-3 shadow-xl shadow-green-500/20 active:scale-95 transition-transform"
+          >
               <MessageCircle className="h-6 w-6" />
               Pedir por WhatsApp ({cartCount})
-          </button>
+          </a>
       </div>
     </div>
   )
