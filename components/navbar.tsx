@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Instagram } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import logo from "../public/images/logo.png"
 
@@ -12,7 +13,6 @@ const navLinks = [
   { label: "Demos", href: "#demos" },
   { label: "Servicios", href: "#servicios" },
   { label: "FAQ", href: "#faq" },
-  { label: "Contacto", href: "#contacto" },
 ]
 
 export function Navbar() {
@@ -44,12 +44,24 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
-          <Button asChild size="sm">
-            <a href="#contacto">
-              Charlemos
+          <div className="flex items-center gap-4 border-l border-border/50 pl-8">
+            <Button asChild size="sm">
+              <a href="#contacto">
+                Charlemos
+              </a>
+            </Button>
+            <a
+              href="https://www.instagram.com/matetechok/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground transition-colors hover:text-primary"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-5 w-5" />
             </a>
-          </Button>
+          </div>
         </div>
+
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -78,7 +90,17 @@ export function Navbar() {
                 Charlemos
               </a>
             </Button>
+            <a
+              href="https://www.instagram.com/matetechok/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 mt-4 text-muted-foreground transition-colors hover:text-primary"
+            >
+              <Instagram className="h-5 w-5" />
+              <span className="text-sm font-medium">Seguinos en Instagram</span>
+            </a>
           </div>
+
         </div>
       )}
     </nav>

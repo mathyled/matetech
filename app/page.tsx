@@ -7,6 +7,8 @@ import { Pricing } from "@/components/pricing"
 import { FAQ } from "@/components/faq"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
+import { MobileNav } from "@/components/mobile-nav"
+
 
 export default function Page() {
   return (
@@ -20,6 +22,8 @@ export default function Page() {
       <FAQ />
       <Contact />
       <Footer />
+      <MobileNav />
+
     </main>
   )
 }
