@@ -1,10 +1,15 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
-import { ArrowRight, CalendarCheck } from "lucide-react"
+import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const PHRASES = ["tecnologia real.", "automatizacion.", "software a medida."]
+const PHRASES = [
+  "una web a medida.",
+  "automatizaciones.",
+  "estrategias de contenido.",
+  "campañas publicitarias.",
+]
 
 function AnimatedText() {
   const [currentPhrase, setCurrentPhrase] = useState(0)
@@ -24,7 +29,7 @@ function AnimatedText() {
     const phrase = PHRASES[currentPhrase]
 
     if (!isDeleting && displayedText === phrase) {
-      timeoutRef.current = setTimeout(() => setIsDeleting(true), 2000)
+      timeoutRef.current = setTimeout(() => setIsDeleting(true), 2200)
       return () => {
         if (timeoutRef.current) clearTimeout(timeoutRef.current)
       }
@@ -36,7 +41,7 @@ function AnimatedText() {
       return
     }
 
-    const speed = isDeleting ? 40 : 80
+    const speed = isDeleting ? 35 : 75
 
     timeoutRef.current = setTimeout(() => {
       if (isDeleting) {
@@ -52,12 +57,12 @@ function AnimatedText() {
   }, [displayedText, isDeleting, currentPhrase])
 
   return (
-    <span className="relative inline-block text-primary">
+    <span className="relative inline-block text-primary" aria-live="polite">
       <span
         className="animate-glow-pulse"
         style={{
           textShadow:
-            "0 0 10px hsl(74 64% 50% / 0.4), 0 0 30px hsl(74 64% 50% / 0.15), 0 0 60px hsl(74 64% 50% / 0.05)",
+            "0 0 8px hsl(var(--primary-light) / 0.6)",
         }}
       >
         {displayedText}
@@ -71,85 +76,85 @@ function AnimatedText() {
   )
 }
 
+const TRUST_ITEMS = [
+  "Entrega en semanas, no meses",
+  "Precio cerrado desde el día 1",
+]
+
 export function Hero() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 100)
+    const timer = setTimeout(() => setMounted(true), 80)
     return () => clearTimeout(timer)
   }, [])
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-20">
-      {/* Background grid effect */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(hsl(74 64% 50% / 0.5) 1px, transparent 1px), linear-gradient(90deg, hsl(74 64% 50% / 0.5) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-        }}
-      />
-      {/* Radial glow */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl" />
+    <section
+      id="inicio"
+      className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-4 pt-24 pb-16 sm:px-6"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-grid-brand opacity-60" />
+      <div className="pointer-events-none absolute inset-0 bg-glow-brand" />
+      <div className="pointer-events-none absolute top-1/3 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-light/30 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
+        <div
+          className={`mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary transition-all duration-700 sm:text-sm ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+        >
+          <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+          Agencia de software y marketing · Argentina
+        </div>
 
         <h1
-          className={`font-display text-4xl font-bold leading-tight tracking-tight text-foreground transition-all duration-700 delay-200 sm:text-5xl md:text-6xl lg:text-7xl ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+          className={`font-display text-4xl font-bold leading-[1.1] tracking-tight text-foreground transition-all duration-700 delay-100 sm:text-5xl md:text-6xl lg:text-7xl ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
         >
           <span className="text-balance">
-            Transformamos tu negocio con{" "}
+            Tu negocio merece{" "}
             <br className="hidden sm:inline" />
             <AnimatedText />
           </span>
         </h1>
 
-        <p
-          className={`mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground transition-all duration-700 delay-400 md:text-xl ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
-        >
-          Desarrollo de Software y Automatizaciones. Sin vueltas, precios claros y procesos transparentes.
-        </p>
+   
 
         <div
-          className={`mt-10 flex flex-col items-center gap-4 transition-all duration-700 delay-500 sm:flex-row sm:justify-center ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+          className={`mt-10 flex flex-col items-stretch gap-3 transition-all duration-700 delay-500 sm:flex-row sm:items-center sm:justify-center sm:gap-4 ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
         >
-          <Button asChild size="lg" className="gap-2 text-base">
-            <a href="#servicios">
-              Ver Planes y Precios
-              <ArrowRight className="h-4 w-4" />
+          <Button
+            asChild
+            size="lg"
+            className="h-12 gap-2 rounded-lg px-8 text-base font-semibold shadow-brand-sm hover:shadow-brand"
+          >
+            <a href="#contacto">
+              Quiero mi propuesta gratis
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </Button>
           <Button
             asChild
             variant="outline"
             size="lg"
-            className="gap-2 border-primary/30 text-base text-primary hover:border-primary hover:bg-primary/5"
+            className="h-12 gap-2 rounded-lg border-primary/30 px-8 text-base font-medium text-foreground hover:border-primary/50 hover:bg-primary/5 hover:text-foreground"
           >
-            <a href="#contacto">
-              <CalendarCheck className="h-4 w-4" />
-              Primera consulta 100% bonificada
-            </a>
+            <a href="#servicios">Ver servicios y precios</a>
           </Button>
         </div>
 
-        {/* Trust badges */}
-        <div
-          className={`mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground transition-all duration-700 delay-700 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+        <ul
+          className={`mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-muted-foreground transition-all duration-700 delay-700 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+          aria-label="Beneficios clave"
         >
-          <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Automatiza
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Personaliza
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            100% Codigo Tuyo
-          </span>
-        </div>
+          {TRUST_ITEMS.map((item) => (
+            <li key={item} className="flex items-center gap-2">
+              <span
+                className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                aria-hidden="true"
+              />
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )

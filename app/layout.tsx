@@ -10,11 +10,14 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "matetech | Desarrollo de Software & Automatizaciones",
+  title: "matetech | Desarrollo de Software y Marketing Digital",
   description:
-    "Agencia de desarrollo de software en Argentina. Webs, Apps, Sistemas de Gestion y Automatizaciones. Precios claros, procesos transparentes.",
+    "Agencia en Argentina: desarrollo de software, webs y apps + marketing digital, branding y contenido. Precios claros, resultados medibles.",
   keywords: [
     "desarrollo software",
+    "marketing digital",
+    "creación de contenido",
+    "branding",
     "argentina",
     "landing page",
     "ecommerce",

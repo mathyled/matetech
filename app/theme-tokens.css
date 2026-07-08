@@ -1,0 +1,89 @@
+/**
+ * Matetech — Design tokens (source of truth)
+ * Paleta cálida profesional. No usar hex sueltos en componentes.
+ */
+:root {
+  /* ── Superficies ── */
+  --color-bg-base: #F7F3E9;
+  --color-surface: #FFFFFF;
+
+  /* ── Marca: verde suavizado ── */
+  --color-primary: #8FBB5C;
+  --color-primary-hover: #5E8A3A;
+  --color-primary-light: #C3E89C;
+
+  /* ── Acento cálido (marketing / contenido) ── */
+  --color-accent: #E8A05A;
+
+  /* ── Texto ── */
+  --color-text-primary: #3E3B34;
+  --color-text-secondary: #6B685F;
+
+  /* ── Bordes ── */
+  --color-border: #E3DDC9;
+
+  /* ══════════════════════════════════════════
+     shadcn/ui HSL bridge → consumido por Tailwind
+     Formato: H S% L% (sin hsl())
+     ══════════════════════════════════════════ */
+
+  --background: 42 35% 94%;
+  --foreground: 40 7% 22%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 40 7% 22%;
+  --card-elevated: 0 0% 100%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 40 7% 22%;
+
+  --primary: 88 38% 55%;
+  --primary-foreground: 40 7% 22%;
+  --primary-hover: 96 40% 39%;
+  --primary-muted: 92 65% 76%;
+  --primary-light: 92 65% 76%;
+
+  --secondary: 92 45% 93%;
+  --secondary-foreground: 40 7% 22%;
+
+  --muted: 43 30% 92%;
+  --muted-foreground: 45 5% 40%;
+
+  --accent: 32 74% 63%;
+  --accent-foreground: 40 7% 22%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --success: 96 40% 39%;
+  --success-foreground: 0 0% 100%;
+
+  --border: 43 28% 84%;
+  --input: 43 28% 84%;
+  --ring: 96 40% 39%;
+  --ring-offset: 42 35% 94%;
+
+  /* ── Radios ── */
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+
+  /* ── Sombras (ajustadas para fondo claro) ── */
+  --shadow-sm: 0 1px 3px hsl(40 7% 22% / 0.06);
+  --shadow-md: 0 4px 12px hsl(40 7% 22% / 0.08);
+  --shadow-lg: 0 8px 24px hsl(40 7% 22% / 0.1);
+  --shadow-glow: 0 0 32px hsl(88 38% 55% / 0.15);
+  --shadow-accent: 0 0 24px hsl(32 74% 63% / 0.2);
+
+  /* ── Espaciado de secciones ── */
+  --section-py: 5rem;
+  --section-py-lg: 7rem;
+
+  /* Charts */
+  --chart-1: 88 38% 55%;
+  --chart-2: 32 74% 63%;
+  --chart-3: 96 40% 39%;
+  --chart-4: 43 28% 84%;
+  --chart-5: 45 5% 40%;
+}
