@@ -1,133 +1,146 @@
 "use client"
 
-import { useState } from "react"
-import { Send, CalendarCheck, Users, CheckCircle2 } from "lucide-react"
+import { useState, useEffect, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
+import { Send, CalendarCheck, CheckCircle2, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ScrollReveal } from "@/components/scroll-reveal"
-import { submitContact } from '@/actions/contact-action';
+import { submitContact } from "@/actions/contact-action"
 
-export function Contact() {
+const MARKETING_PREFILL =
+  "Hola, me interesa una estrategia de marketing digital y contenido para mi negocio."
+
+function ContactForm() {
+  const searchParams = useSearchParams()
   const [submitted, setSubmitted] = useState(false)
-  const [pending, setPending] = useState(false);
+  const [pending, setPending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    if (searchParams.get("interes") === "marketing") {
+      setMessage(MARKETING_PREFILL)
+    }
+  }, [searchParams])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setPending(true);
-    const result = await submitContact(new FormData(e.currentTarget));
-    setPending(false);
+    setPending(true)
+    setError(null)
+
+    const result = await submitContact(new FormData(e.currentTarget))
+    setPending(false)
 
     if (result.success) {
-      console.log(result.message);
-      // Opcional: resetear el form aquí
+      setSubmitted(true)
     } else {
-      console.log(result.message);
+      setError(
+        result.message ||
+          "Hubo un error al enviar. Intentá de nuevo o escribinos por Instagram."
+      )
     }
-    setSubmitted(true)
   }
 
   return (
- 
-    <section id="contacto" className="px-2 py-16 sm:px-2 md:py-24 lg:py-32" >
-      <div className="mx-auto max-w-7xl ">
+    <section id="contacto" className="section-padding">
+      <div className="section-container">
         <ScrollReveal>
-          <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.03]">
-            {/* Background grid */}
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.02]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(hsl(74 64% 50% / 0.5) 1px, transparent 1px), linear-gradient(90deg, hsl(74 64% 50% / 0.5) 1px, transparent 1px)",
-                backgroundSize: "32px 32px",
-              }}
-            />
-            <div className="relative z-10 grid gap-8 p-6 sm:gap-12 sm:p-12 md:grid-cols-2 md:gap-16 md:p-14">
-              {/* Left column - messaging */}
+          <div className="relative overflow-hidden rounded-2xl border border-primary/25 bg-primary-light/15">
+            <div className="pointer-events-none absolute inset-0 bg-grid-brand opacity-30" />
+
+            <div className="relative z-10 grid gap-8 p-6 sm:gap-10 sm:p-10 md:grid-cols-2 md:gap-12 md:p-14">
               <div className="flex flex-col justify-center">
-                <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-                  <CalendarCheck className="h-4 w-4" />
-                  100% bonificada
+                <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-primary/25 bg-primary-light/30 px-4 py-1.5 text-xs font-medium text-primary-hover sm:text-sm">
+                  <CalendarCheck className="h-3.5 w-3.5" aria-hidden="true" />
+                  Primera consulta 100% bonificada
                 </div>
 
                 <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
                   <span className="text-balance">
-                    Hablemos de tu{" "}
-                    <span className="text-primary">próximo proyecto</span>
+                    Contanos tu idea y te armamos un{" "}
+                    <span className="text-primary">plan de acción</span>
                   </span>
                 </h2>
 
                 <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg md:max-w-md">
-                  Contanos tu idea y te respondemos en menos de 24hs con un
-                  plan de accion.
+                  Respondemos en menos de 24 horas con diagnóstico, presupuesto
+                  cerrado y plazos claros.
                 </p>
 
-                <div className="mt-8 flex flex-col gap-3 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    Diagnostico a medida de tu proyecto
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    Presupuesto cerrado y plazos garantizados
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    Te contestamos en menos de 24 horas
-                  </span>
-                </div>
+                <ul className="mt-8 flex flex-col gap-3 text-sm text-muted-foreground">
+                  {[
+                    "Diagnóstico a medida de tu proyecto",
+                    "Presupuesto cerrado, sin sorpresas",
+                    "Respuesta en menos de 24 horas",
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-2">
+                      <CheckCircle2
+                        className="h-4 w-4 shrink-0 text-primary"
+                        aria-hidden="true"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              {/* Right column - form */}
               <div>
                 {submitted ? (
-                  <div className="flex h-full min-h-[300px] flex-col items-center justify-center rounded-xl border border-primary/20 bg-card p-6 text-center sm:p-8 md:p-10">
+                  <div
+                    className="flex h-full min-h-[280px] flex-col items-center justify-center rounded-xl border border-primary/20 bg-card p-8 text-center"
+                    role="status"
+                    aria-live="polite"
+                  >
                     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-                      <CheckCircle2 className="h-7 w-7 text-primary" />
+                      <CheckCircle2
+                        className="h-7 w-7 text-primary"
+                        aria-hidden="true"
+                      />
                     </div>
                     <h3 className="font-display text-xl font-semibold text-foreground">
-                      Mensaje enviado
+                      ¡Mensaje recibido!
                     </h3>
                     <p className="mt-2 text-muted-foreground">
-                      Te contactamos en menos de 24 horas.
+                      Te contactamos en menos de 24 horas con tu propuesta.
                     </p>
                   </div>
                 ) : (
                   <form
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-5 rounded-xl border border-border/50 bg-card p-5 sm:p-6 md:p-8"
+                    noValidate
                   >
-                    <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+                    <div className="grid gap-4 sm:grid-cols-2">
                       <div className="flex flex-col gap-2">
-                        <Label htmlFor="name" className="text-foreground">
-                          Nombre
-                        </Label>
+                        <Label htmlFor="name">Nombre</Label>
                         <Input
                           id="name"
                           name="name"
                           placeholder="Tu nombre"
                           required
+                          autoComplete="name"
                           className="border-border/50 bg-background"
                         />
                       </div>
                       <div className="flex flex-col gap-2">
-                        <Label htmlFor="email" className="text-foreground">
-                          Email
-                        </Label>
+                        <Label htmlFor="email">Email</Label>
                         <Input
                           id="email"
                           name="email"
                           type="email"
                           placeholder="tu@email.com"
                           required
+                          autoComplete="email"
                           className="border-border/50 bg-background"
                         />
                       </div>
                     </div>
 
                     <div className="flex flex-col gap-2">
-                      <Label htmlFor="company" className="text-foreground">
+                      <Label htmlFor="company">
                         Empresa{" "}
                         <span className="text-muted-foreground">(opcional)</span>
                       </Label>
@@ -135,27 +148,55 @@ export function Contact() {
                         id="company"
                         name="company"
                         placeholder="Nombre de tu empresa"
+                        autoComplete="organization"
                         className="border-border/50 bg-background"
                       />
                     </div>
 
                     <div className="flex flex-col gap-2">
-                      <Label htmlFor="message" className="text-foreground">
-                        Contanos tu idea
-                      </Label>
+                      <Label htmlFor="message">¿Qué necesitás?</Label>
                       <Textarea
                         id="message"
                         name="message"
-                        placeholder="Describi brevemente que necesitas..."
+                        placeholder="Contanos brevemente tu proyecto o problema..."
                         rows={4}
                         required
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
                         className="resize-none border-border/50 bg-background"
                       />
                     </div>
 
-                    <Button type="submit" size="lg" className="mt-1 gap-2 text-base">
-                      <Send className="h-4 w-4" />
-                      Agendar consulta
+                    {error && (
+                      <p
+                        className="text-sm text-destructive"
+                        role="alert"
+                        aria-live="assertive"
+                      >
+                        {error}
+                      </p>
+                    )}
+
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={pending}
+                      className="mt-1 gap-2 text-base font-semibold"
+                    >
+                      {pending ? (
+                        <>
+                          <Loader2
+                            className="h-4 w-4 animate-spin"
+                            aria-hidden="true"
+                          />
+                          Enviando...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4" aria-hidden="true" />
+                          Quiero mi propuesta gratis
+                        </>
+                      )}
                     </Button>
                   </form>
                 )}
@@ -163,23 +204,15 @@ export function Contact() {
             </div>
           </div>
         </ScrollReveal>
-
-        {/* Talent CTA */}
-        {/* <ScrollReveal delay={200}>
-          <div className="mt-8 flex items-center justify-center gap-3 rounded-xl border border-border/50 bg-card p-6 text-center">
-            <Users className="h-5 w-5 text-primary" />
-            <p className="text-sm text-muted-foreground">
-              {"Sos desarrollador? "}
-              <a
-                href="mailto:hola@matetech.com.ar"
-                className="font-medium text-primary transition-colors hover:text-primary/80"
-              >
-                Unite a nuestra base de talentos
-              </a>
-            </p>
-          </div>
-        </ScrollReveal> */}
       </div>
     </section>
+  )
+}
+
+export function Contact() {
+  return (
+    <Suspense fallback={null}>
+      <ContactForm />
+    </Suspense>
   )
 }

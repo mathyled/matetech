@@ -1,43 +1,111 @@
+@import './theme-tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 96%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 96%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 74 64% 50%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 96%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 74 64% 50%;
-    --accent-foreground: 0 0% 4%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14%;
-    --input: 0 0% 14%;
-    --ring: 74 64% 50%;
-    --radius: 0.75rem;
-    --chart-1: 74 64% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight text-foreground;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6;
+  }
+
+  .section-padding {
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: var(--section-py-lg);
+      padding-bottom: var(--section-py-lg);
+    }
+  }
+
+  .section-eyebrow {
+    @apply mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary sm:text-sm;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-bold text-balance sm:text-4xl md:text-5xl;
+  }
+
+  .section-description {
+    @apply mx-auto mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg;
+  }
+
+  .card-elevated {
+    @apply rounded-xl border border-border bg-card transition-all duration-300;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-elevated:hover {
+    @apply border-primary/30;
+    box-shadow: var(--shadow-md), var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  .cta-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md transition-all duration-200;
+    box-shadow: var(--shadow-md);
+  }
+
+  .cta-primary:hover {
+    @apply bg-primary-hover;
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    transform: translateY(-1px);
+  }
+
+  .cta-primary:active {
+    transform: translateY(0);
+  }
+
+  .cta-marketing {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-md transition-all duration-200;
+    box-shadow: var(--shadow-md);
+  }
+
+  .cta-marketing:hover {
+    background-color: hsl(var(--accent) / 0.9);
+    box-shadow: var(--shadow-lg), var(--shadow-accent);
+    transform: translateY(-1px);
+  }
+
+  .bg-grid-brand {
+    background-image:
+      linear-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.08) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .bg-glow-brand {
+    background: radial-gradient(
+      ellipse 60% 50% at 50% 50%,
+      hsl(var(--primary-light) / 0.35) 0%,
+      transparent 70%
+    );
   }
 }
 
@@ -45,10 +113,28 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @keyframes glow-pulse {
@@ -58,11 +144,26 @@ html {
     opacity: 1;
   }
   50% {
-    filter: brightness(1.25);
-    opacity: 0.92;
+    filter: brightness(1.05);
+    opacity: 0.95;
   }
 }
 
 .animate-glow-pulse {
   animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out forwards;
 }

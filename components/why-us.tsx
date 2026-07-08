@@ -1,58 +1,56 @@
 import { Zap, Eye, KeyRound } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { ScrollReveal } from "@/components/scroll-reveal"
+import { SectionHeader } from "@/components/section-header"
 
 const values = [
   {
     icon: Zap,
-    title: "Velocidad",
+    title: "Entregamos rápido",
     description:
-      "Entregamos en semanas, no en meses. Usamos tecnologia de punta para que tu proyecto vuele.",
+      "Tu proyecto en semanas, no en meses. Usamos stacks modernos para iterar sin perder calidad.",
   },
   {
     icon: Eye,
-    title: "Transparencia",
+    title: "Cero sorpresas",
     description:
-      "Sabes cuanto vas a pagar desde el inicio. Avances regulares para que veas como va quedando.",
+      "Presupuesto cerrado desde el día uno. Te mostramos avances reales cada semana.",
   },
   {
     icon: KeyRound,
-    title: "Autonomia",
+    title: "Vos tenés el control",
     description:
-      "Te damos las herramientas para que te manejes solo.",
+      "El software es tuyo. Te capacitamos para que manejes tu sistema sin depender de nadie.",
   },
 ]
 
 export function WhyUs() {
   return (
-    <section id="nosotros" className="px-6 py-24 md:py-32">
-      <div className="mx-auto max-w-7xl">
-        <ScrollReveal>
-          <div className="mb-16 text-center">
-            <p className="mb-3 text-sm font-medium uppercase tracking-widest text-primary">
-              Por que matetech
-            </p>
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl md:text-5xl">
-              <span className="text-balance">
-                Valores que nos{" "}
-                <span className="text-primary">definen</span>
-              </span>
-            </h2>
-          </div>
-        </ScrollReveal>
+    <section id="nosotros" className="section-padding">
+      <div className="section-container">
+        <SectionHeader
+          eyebrow="Por qué matetech"
+          title={
+            <>
+              Resultados reales,{" "}
+              <span className="text-primary">sin vueltas</span>
+            </>
+          }
+          description="Cada proyecto se diseña para resolver un problema concreto de tu negocio."
+        />
 
         <div className="grid gap-6 md:grid-cols-3">
           {values.map((value, index) => (
-            <ScrollReveal key={value.title} delay={index * 250}>
-              <Card className="group h-full border-border/50 bg-card transition-all hover:border-primary/30 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
-                <CardContent className="p-8">
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/20">
-                    <value.icon className="h-6 w-6" />
+            <ScrollReveal key={value.title} delay={index * 150}>
+              <Card className="card-elevated group h-full bg-card">
+                <CardContent className="p-6 md:p-8">
+                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-primary-light/40 text-primary-hover transition-colors group-hover:bg-primary-light/60">
+                    <value.icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <h3 className="mb-3 font-display text-xl font-semibold text-foreground">
+                  <h3 className="mb-2 font-display text-lg font-semibold text-foreground md:text-xl">
                     {value.title}
                   </h3>
-                  <p className="leading-relaxed text-muted-foreground">
+                  <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
                     {value.description}
                   </p>
                 </CardContent>
