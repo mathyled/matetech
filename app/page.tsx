@@ -19,7 +19,6 @@ export default function Page() {
       <Hero />
       <WhyUs />
       <Process />
-      {/* <Demos /> */}
       <SocialProof />
       <Pricing />
       <CtaBanner />
